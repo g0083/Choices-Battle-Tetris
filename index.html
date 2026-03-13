@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="/assets/icon-192-jmuqHIQM.png">
     <link rel="icon" type="image/png" href="/assets/icon-192-jmuqHIQM.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-  <script type="module" crossorigin src="/assets/index-Cl7SY95l.js"></script>
+  <script type="module" crossorigin src="/assets/index-CVtNR7gD.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-wdMrokcC.css">
 </head>
 
@@ -41,7 +41,7 @@
 
                 <div id="header-room-container" class="glass hidden"
                     style="padding: 5px 15px; display: flex; align-items: center; gap: 8px; border-radius: 20px; white-space: nowrap;">
-                    <span style="font-size: 0.7rem; opacity: 0.7;">ROOM:</span>
+                    <span style="font-size: 0.7rem; opacity: 0.7;" data-i18n="room_id">ROOM:</span>
                     <span id="header-room-id"
                         style="font-family: monospace; font-weight: 800; transition: all 0.2s; white-space: nowrap;">***</span>
                     <button id="toggle-room-id"
@@ -297,7 +297,7 @@
                     <div class="player-area p1 glass">
                         <div class="player-info">
                             <span class="player-name" id="p1-display-name">Player 1</span>
-                            <div class="score">Score: <span id="p1-score">0</span></div>
+                            <div class="score"><span data-i18n="score">Score</span>: <span id="p1-score">0</span></div>
 
                         </div>
                         <label class="modern-toggle small" style="font-size: 0.7rem; opacity: 0.8;">
@@ -318,19 +318,19 @@
                     <div class="player-area p2 glass">
                         <div class="player-info">
                             <span class="player-name" id="p2-display-name">Opponent</span>
-                            <div class="score">Score: <span id="p2-score">0</span></div>
+                            <div class="score"><span data-i18n="score">Score</span>: <span id="p2-score">0</span></div>
 
                         </div>
                         <label class="modern-toggle small" style="font-size: 0.7rem; opacity: 0.8;">
                             <input type="checkbox" id="p2-ghost-chk">
                             <div class="toggle-slider"></div>
-                            <span>Guide</span>
+                            <span data-i18n="guide">Guide</span>
                         </label>
                         <div class="board-container" style="position: relative;">
                             <canvas id="p2-canvas" width="300" height="600"></canvas>
                             <div id="p2-action-container" class="action-text-container"></div>
                             <div id="p2-next-container" class="next-box">
-                                <span class="label">NEXT</span>
+                                <span class="label" data-i18n="next">NEXT</span>
                                 <canvas id="p2-next" width="80" height="80"></canvas>
                             </div>
                         </div>
