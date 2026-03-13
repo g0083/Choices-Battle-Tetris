@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Choices Battle Tetris - Block Selection Battle</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="manifest" href="/assets/manifest-CpiWTtMS.json">
+    <meta name="theme-color" content="#050505">
+    <link rel="apple-touch-icon" href="/assets/icon-192-jmuqHIQM.png">
+    <link rel="icon" type="image/png" href="/assets/icon-192-jmuqHIQM.png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+  <script type="module" crossorigin src="/assets/index-Ipaq7GHS.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-wdMrokcC.css">
+</head>
+
+<body>
+    <div id="app">
+        <header>
+            <h1>
+                <a href="#" id="title-home-link"
+                    style="text-decoration: none; color: inherit; display: flex; align-items: center;">
+                    <img src="/assets/title_threshold_eroded-B6iEnT_D.png" alt="Choices Battle Tetris" class="title-logo">
+                </a>
+            </h1>
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <button id="help-btn" class="btn-secondary"
+                    style="border-radius: 50%; width: 36px; height: 36px; min-width: 36px; min-height: 36px; padding: 0; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.2rem; flex-shrink: 0;"
+                    data-i18n-title="help">?</button>
+
+                <button id="install-pwa-btn" class="btn-secondary hidden"
+                    style="padding: 5px 12px; font-size: 0.8rem; border-color: var(--accent-secondary); color: white; white-space: nowrap;"><span
+                        data-i18n="install">📱 INSTALL</span></button>
+
+                <span id="spectator-count" class="hidden"
+                    style="font-weight: 800; color: var(--accent-secondary); margin-right: 10px; font-size: 1.2rem;">👁
+                    0</span>
+
+                <div id="header-room-container" class="glass hidden"
+                    style="padding: 5px 15px; display: flex; align-items: center; gap: 8px; border-radius: 20px; white-space: nowrap;">
+                    <span style="font-size: 0.7rem; opacity: 0.7;">ROOM:</span>
+                    <span id="header-room-id"
+                        style="font-family: monospace; font-weight: 800; transition: all 0.2s; white-space: nowrap;">***</span>
+                    <button id="toggle-room-id"
+                        style="background: none; border: none; color: white; cursor: pointer; font-size: 1rem;">👁</button>
+                    <div style="width: 1px; height: 15px; background: rgba(255,255,255,0.3); margin: 0 5px;"></div>
+                    <button id="toggle-spectator-allow" class="hidden"
+                        style="background: none; border: 1px solid rgba(255,255,255,0.3); border-radius: 4px; color: white; cursor: pointer; font-size: 0.7rem; padding: 3px 8px; transition: all 0.2s;"
+                        title="Toggle Spectators">Spec: OFF</button>
+                </div>
+                <button id="settings-btn" class="btn-secondary"
+                    style="border-radius: 50%; width: 36px; height: 36px; min-width: 36px; min-height: 36px; padding: 0; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0;"
+                    data-i18n-title="settings">⚙️</button>
+                <div id="status-badge" class="glass" data-i18n="disconnected">Disconnected</div>
+            </div>
+        </header>
+
+        <main>
+            <div id="start-screen" class="overlay box-glow">
+                <div class="lobby-content">
+                    <h2>Choices Battle Tetris</h2>
+                    <div class="input-group">
+                        <label data-i18n="player_name_label">Your Name</label>
+                        <input type="text" id="player-name" placeholder="Enter your name"
+                            data-i18n-placeholder="player_name_placeholder">
+                    </div>
+
+                    <div id="mode-selection-area">
+                        <div id="main-menu-area" style="display: flex; flex-direction: column; gap: 15px;">
+                            <button id="menu-vs-btn" class="btn-primary"
+                                style="padding: 20px; font-size: 1.2rem; letter-spacing: 2px;"
+                                data-i18n="menu_vs_mode">⚔️ VS MODE</button>
+                            <button id="menu-cpu-btn" class="btn-accent"
+                                style="padding: 20px; font-size: 1.2rem; letter-spacing: 2px;"
+                                data-i18n="menu_cpu_mode">🤖 CPU MODE</button>
+                            <button id="menu-replay-btn" class="btn-secondary"
+                                style="padding: 20px; font-size: 1.2rem; letter-spacing: 2px;"
+                                data-i18n="menu_replay_mode">▶ REPLAY MODE</button>
+                            <input type="file" id="replay-file" accept=".choices-battle-tetris-replay,.json"
+                                class="hidden">
+                        </div>
+
+                        <div id="vs-mode-area" class="hidden" style="display: flex; flex-direction: column; gap: 15px;">
+                            <div id="random-area" class="glass" style="padding: 20px;">
+                                <h3 data-i18n="random_match_title">Random Match</h3>
+                                <button id="random-match-btn" class="btn-standout"
+                                    style="width: 100%; margin-top: 10px;" data-i18n="random_match_btn">🌐 Random
+                                    Match</button>
+                            </div>
+
+                            <div id="host-area" class="host-section glass" style="padding: 20px;">
+                                <h3 data-i18n="host_game_title">Host a Game</h3>
+                                <div class="input-group" style="margin-bottom: 10px;">
+                                    <label data-i18n="custom_room_id_label">Custom Room ID (Optional)</label>
+                                    <input type="text" id="custom-room-id" placeholder="Enter custom ID" maxlength="20"
+                                        data-i18n-placeholder="custom_room_id_placeholder">
+                                </div>
+                                <div class="input-group" style="margin-bottom: 10px;">
+                                    <label class="modern-toggle">
+                                        <input type="checkbox" id="hotspot-chk">
+                                        <div class="toggle-slider"></div>
+                                        <span data-i18n="hotspot_mode">Hotspot Mode (Offline LAN)</span>
+                                    </label>
+                                </div>
+                                <div class="input-group" style="margin-bottom: 20px;">
+                                    <label class="modern-toggle">
+                                        <input type="checkbox" id="allow-spectators-chk">
+                                        <div class="toggle-slider"></div>
+                                        <span data-i18n="allow_spectators">Allow Spectators</span>
+                                    </label>
+                                </div>
+                                <button id="host-btn" class="btn-primary" data-i18n="create_room_btn">Create
+                                    Room</button>
+                            </div>
+
+                            <div id="join-area" class="join-section glass" style="padding: 20px;">
+                                <h3 data-i18n="join_game_title">Join a Game or Spectate</h3>
+                                <input type="text" id="target-peer-id" placeholder="Enter Host ID"
+                                    data-i18n-placeholder="enter_host_id_placeholder">
+                                <div id="connect-progress-container" class="hidden"
+                                    style="width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 3px; overflow: hidden; margin-top: -5px; margin-bottom: 5px;">
+                                    <div id="connect-progress-bar"
+                                        style="width: 0%; height: 100%; background: var(--accent-secondary); transition: width 0.2s;">
+                                    </div>
+                                </div>
+                                <button id="join-btn" class="btn-primary" data-i18n="connect_btn">Connect</button>
+                            </div>
+
+                            <button id="back-from-vs-btn" class="btn-secondary" style="width: 100%;"
+                                data-i18n="back_to_menu">◀ BACK TO
+                                MENU</button>
+                        </div>
+                    </div>
+
+                    <div id="cpu-level-area" class="hidden">
+                        <div class="input-group"
+                            style="margin-bottom: 20px; text-align: center; display: flex; justify-content: center;">
+                            <label class="modern-toggle">
+                                <input type="checkbox" id="cpu-vs-cpu-chk">
+                                <div class="toggle-slider"></div>
+                                <span data-i18n="cpu_watch_mode">CPU vs CPU (Watch Mode)</span>
+                            </label>
+                        </div>
+
+                        <div id="single-cpu-section">
+                            <h3 style="margin-bottom: 5px; text-align: center;" data-i18n="select_cpu_level">Select CPU
+                                Level</h3>
+                            <p
+                                style="font-size:0.85rem; opacity:0.9; margin-bottom:20px; text-align: center; line-height: 1.5;">
+                                <span data-i18n="cpu_level_description">Lv10はヒューリスティックとしてほぼ無敵の強さです。</span><br>
+                                <span style="color: var(--accent-secondary); font-weight: bold;"
+                                    data-i18n="cpu_ai_notice">Lv11〜20（AIモデル）は現在開発中のため、近日公開予定です！</span>
+                            </p>
+                            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 20px;"
+                                id="level-buttons-container"></div>
+                        </div>
+
+                        <div id="dual-cpu-section" class="hidden">
+                            <p
+                                style="font-size:0.85rem; opacity:0.9; margin-bottom:20px; text-align: center; line-height: 1.5;">
+                                <span data-i18n="cpu_level_description">Lv10はヒューリスティックとしてほぼ無敵の強さです。</span><br>
+                                <span style="color: var(--accent-secondary); font-weight: bold;"
+                                    data-i18n="cpu_ai_notice">Lv11〜20（AIモデル）は現在開発中のため、近日公開予定です！</span>
+                            </p>
+
+                            <div class="input-group"
+                                style="margin-bottom: 20px; text-align: center; display: flex; justify-content: center;">
+                                <label class="modern-toggle">
+                                    <input type="checkbox" id="fast-cpu-match-chk">
+                                    <div class="toggle-slider"></div>
+                                    <span>High Speed Battle</span>
+                                </label>
+                            </div>
+                            <div style="margin-bottom: 15px;">
+                                <h3 style="margin-bottom: 5px; font-size: 1rem; color: var(--accent-primary);">CPU 1
+                                    Level</h3>
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;"
+                                    id="cpu1-level-buttons"></div>
+                            </div>
+                            <div style="margin-bottom: 20px;">
+                                <h3 style="margin-bottom: 5px; font-size: 1rem; color: var(--accent-secondary);">CPU 2
+                                    Level</h3>
+                                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px;"
+                                    id="cpu2-level-buttons"></div>
+                            </div>
+                            <button id="start-dual-cpu-btn" class="btn-primary"
+                                style="width: 100%; margin-bottom: 15px;" data-i18n="start_watch_mode">START WATCH
+                                MODE</button>
+                        </div>
+
+                        <button id="cancel-cpu-btn" class="btn-secondary" style="width: 100%;"
+                            data-i18n="back_btn">BACK</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="lobby-overlay" class="overlay hidden glass-heavy">
+                <div class="lobby-content">
+                    <h2 id="lobby-title" data-i18n="lobby_title">Lobby</h2>
+                    <div id="room-info" class="glass hidden">
+                        <span class="label" data-i18n="invite_link_qr">Invite Link & QR</span>
+                        <div class="share-box"
+                            style="display: flex; flex-direction: column; gap: 15px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-top: 10px;">
+                            <div style="display: flex; width: 100%; align-items: center; gap: 10px;">
+                                <span id="my-peer-id"
+                                    style="font-weight: 800; color: var(--accent-secondary); flex: 1; min-width: 0; word-break: break-all;">...</span>
+                                <button id="copy-link" class="btn-secondary"
+                                    style="white-space: nowrap; width: auto; padding: 10px 15px; flex-shrink: 0;"
+                                    data-i18n="copy_link">Copy
+                                    link</button>
+                            </div>
+                            <div style="background: white; padding: 10px; border-radius: 8px; align-self: flex-start;">
+                                <canvas id="invite-qr"></canvas>
+                            </div>
+                        </div>
+                        <div class="sns-share">
+                            <button class="share-twitter btn-sns twitter" title="Share on X">𝕏 (X)</button>
+                            <button class="share-line btn-sns line" title="Share on LINE">LINE</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-sync glass">
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                                <label data-i18n="selection_sec">Selection (sec)</label>
+                                <input type="number" id="selection-duration-input" value="10" min="1" max="15">
+                            </div>
+                            <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                                <label data-i18n="drop_ms">Drop (ms)</label>
+                                <input type="number" id="drop-speed-input" value="500" min="100" max="2000" step="100">
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px;">
+                            <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                                <label data-i18n="attack_req_n">Attack Req. (n)</label>
+                                <input type="number" id="attack-req-input" value="2" min="1" max="4"
+                                    data-i18n-title="attack_req_tip">
+                            </div>
+                            <div class="input-group" style="flex: 1; margin-bottom: 0;">
+                                <label data-i18n="send_lines_m">Send Lines (m)</label>
+                                <input type="number" id="send-lines-input" value="1" min="1" max="10"
+                                    data-i18n-title="send_lines_tip">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="players-ready">
+                        <div class="player-ready-card p1">
+                            <span class="name" id="p1-lobby-name" data-i18n="you">You</span>
+                            <span class="status-dot" id="p1-ready-status"></span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="player-ready-card p2">
+                            <span class="name" id="p2-lobby-name" data-i18n="waiting">Waiting...</span>
+                            <span class="status-dot" id="p2-ready-status"></span>
+                        </div>
+                    </div>
+
+                    <div class="lobby-actions">
+                        <button id="ready-btn" class="btn-primary" data-i18n="start_game">START GAME</button>
+                        <button id="back-to-home" class="btn-secondary" data-i18n="home">HOME</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="selection-overlay" class="overlay hidden">
+                <div class="lobby-content glass-heavy">
+                    <div id="selection-timer"></div>
+                    <div class="selection-instructions">
+                        <p id="selection-prompt" data-i18n="selection_prompt">1. 自分用のブロックを選んでください (1-4キー)</p>
+                        <div class="selection-status-pills">
+                            <span id="p1-sel-status" class="status-pill blue" data-i18n="you_selecting">You:
+                                SELECTING</span>
+                            <span id="p2-sel-status" class="status-pill red" data-i18n="opponent_selecting">Opponent:
+                                SELECTING...</span>
+                        </div>
+                    </div>
+                    <div id="choices-container" class="choice-grid">
+                    </div>
+                </div>
+            </div>
+
+            <div id="spectator-overlay" class="overlay hidden glass-heavy">
+                <div class="lobby-content" style="max-width: 800px; padding: 20px;">
+                    <h3 style="color:var(--accent-primary); margin-bottom: 10px;">Player 1 Choices</h3>
+                    <div id="spec-p1-choices" class="choice-grid" style="margin:0 0 20px 0;"></div>
+                    <h3 style="color:var(--accent-secondary); margin-bottom: 10px;">Player 2 Choices</h3>
+                    <div id="spec-p2-choices" class="choice-grid" style="margin:0;"></div>
+                </div>
+            </div>
+
+            <div id="game-view" class="hidden">
+                <div class="game-container">
+                    <div class="player-area p1 glass">
+                        <div class="player-info">
+                            <span class="player-name" id="p1-display-name">Player 1</span>
+                            <div class="score">Score: <span id="p1-score">0</span></div>
+
+                        </div>
+                        <label class="modern-toggle small" style="font-size: 0.7rem; opacity: 0.8;">
+                            <input type="checkbox" id="p1-ghost-chk">
+                            <div class="toggle-slider"></div>
+                            <span data-i18n="guide">Guide</span>
+                        </label>
+                        <div class="board-container" style="position: relative;">
+                            <canvas id="p1-canvas" width="300" height="600"></canvas>
+                            <div id="p1-action-container" class="action-text-container"></div>
+                            <div id="p1-next-container" class="next-box">
+                                <span class="label" data-i18n="next">NEXT</span>
+                                <canvas id="p1-next" width="80" height="80"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="player-area p2 glass">
+                        <div class="player-info">
+                            <span class="player-name" id="p2-display-name">Opponent</span>
+                            <div class="score">Score: <span id="p2-score">0</span></div>
+
+                        </div>
+                        <label class="modern-toggle small" style="font-size: 0.7rem; opacity: 0.8;">
+                            <input type="checkbox" id="p2-ghost-chk">
+                            <div class="toggle-slider"></div>
+                            <span>Guide</span>
+                        </label>
+                        <div class="board-container" style="position: relative;">
+                            <canvas id="p2-canvas" width="300" height="600"></canvas>
+                            <div id="p2-action-container" class="action-text-container"></div>
+                            <div id="p2-next-container" class="next-box">
+                                <span class="label">NEXT</span>
+                                <canvas id="p2-next" width="80" height="80"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="mobile-controls">
+                    <div class="control-row">
+                        <div class="ctrl-btn" id="btn-rot-left"><span>↺</span><small data-i18n="rot_l">Rot L (Q)</small>
+                        </div>
+                        <div class="ctrl-btn" id="btn-rot-right"><span>↻</span><small data-i18n="rot_r">Rot R
+                                (E)</small></div>
+                    </div>
+                    <div class="control-row">
+                        <div class="ctrl-btn" id="btn-left"><span>←</span><small data-i18n="left">Left (A)</small></div>
+                        <div class="ctrl-btn" id="btn-down"><span>↓</span><small data-i18n="down">Drop (S)</small></div>
+                        <div class="ctrl-btn" id="btn-right"><span>→</span><small data-i18n="right">Right (D)</small>
+                        </div>
+                    </div>
+                    <div class="control-row">
+                        <div class="ctrl-btn wide" id="btn-drop"><span>⤓</span><small data-i18n="hard_drop">Hard Drop
+                                (Space)</small></div>
+                    </div>
+                </div>
+                <div id="spectator-indicator" class="hidden"
+                    style="margin-top: auto; text-align: center; padding: 20px; font-weight: 800; color: var(--accent-secondary); letter-spacing: 5px;"
+                    data-i18n="spectator_mode_indicator">
+                    👁 SPECTATOR MODE
+                </div>
+            </div>
+
+            <div id="game-over-overlay" class="overlay hidden glass-heavy">
+                <div class="lobby-content result-screen">
+                    <h2 id="result-text" data-i18n="result">RESULT</h2>
+                    <div id="result-winner" class="result-outcome-text text-glow">-</div>
+
+                    <div class="result-stats">
+                        <div class="stats-grid">
+                            <div class="stat-item p1">
+                                <span id="res-p1-state" class="state-label"></span>
+                                <span id="res-p1-name" class="name" data-i18n="you">You</span>
+                                <div class="val-box">
+                                    <span class="label" data-i18n="score">Score</span>
+                                    <span id="res-p1-score" class="value">0</span>
+                                </div>
+                                <div class="val-box">
+                                    <span class="label" data-i18n="blocks">Blocks</span>
+                                    <span id="res-p1-blocks" class="value">0</span>
+                                </div>
+                            </div>
+                            <div class="vs-small">VS</div>
+                            <div class="stat-item p2">
+                                <span id="res-p2-state" class="state-label"></span>
+                                <span id="res-p2-name" class="name" data-i18n="waiting">Opponent</span>
+                                <div class="val-box">
+                                    <span class="label" data-i18n="score">Score</span>
+                                    <span id="res-p2-score" class="value">0</span>
+                                </div>
+                                <div class="val-box">
+                                    <span class="label" data-i18n="blocks">Blocks</span>
+                                    <span id="res-p2-blocks" class="value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stat-footer">
+                            <span class="stat-label" data-i18n="play_time">Play Time</span>
+                            <span id="result-time" class="stat-value">00:00</span>
+                        </div>
+                    </div>
+
+                    <div class="social-share-area">
+                        <p class="share-label" data-i18n="share_result">SHARE YOUR RESULT</p>
+                        <div class="share-btns">
+                            <button id="share-copy" class="btn-secondary" title="Copy to Clipboard">📋 Copy</button>
+                            <button id="share-twitter" class="btn-sns twitter" title="Share on X">𝕏 (X)</button>
+                            <button id="share-line" class="btn-sns line" title="Share on LINE">LINE</button>
+                        </div>
+                    </div>
+
+                    <div class="final-actions">
+                        <p id="restart-status"></p>
+                        <button id="download-replay-btn" class="btn-secondary" style="margin-bottom: 10px; width: 100%;"
+                            data-i18n="download_replay">💾 DOWNLOAD REPLAY</button>
+                        <button id="watch-replay-btn" class="btn-primary" style="margin-bottom: 10px; width: 100%;"
+                            data-i18n="watch_replay">▶
+                            WATCH REPLAY</button>
+
+                        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                            <button id="new-game-btn" class="btn-primary" style="flex: 1;" data-i18n="play_again">PLAY
+                                AGAIN</button>
+                            <button id="new-match-btn" class="btn-accent hidden" style="flex: 1;"
+                                data-i18n="new_match">NEW MATCH</button>
+                        </div>
+
+                        <button id="spec-continue-btn" class="btn-primary hidden"
+                            data-i18n="continue_spectating">CONTINUE SPECTATING</button>
+
+                        <div id="cpu-restart-actions" class="hidden"
+                            style="display:flex; gap:10px; justify-content:center;">
+                            <button id="btn-prev-level" class="btn-secondary" style="flex:1;">◀ Lv Down</button>
+                            <button id="btn-same-level" class="btn-primary" style="flex:1.5;"
+                                data-i18n="play_again">Retry</button>
+                            <button id="btn-next-level" class="btn-secondary" style="flex:1;">Lv Up ▶</button>
+                        </div>
+
+                        <button id="home-btn" class="btn-secondary" style="margin-top: 15px; width: 100%;"
+                            data-i18n="home">HOME</button>
+                    </div>
+                </div>
+            </div>
+            <div id="help-overlay" class="overlay hidden glass-heavy" style="z-index: 2500;">
+                <div class="lobby-content"
+                    style="max-width: 600px; padding: 30px; text-align: left; max-height: 80vh; overflow-y: auto;">
+                    <h2 style="text-align: center; margin-bottom: 20px; color: var(--accent-secondary);">How to Play
+                    </h2>
+
+                    <h3 style="color: white; margin-bottom: 10px;">🌟 ゲームの特徴</h3>
+                    <p style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);">
+                        「Choices Battle Tetris」は、自分と相手のブロックを互いに選び合う、新感覚の対戦型パズルゲームです。<br>
+                        落ちてくるブロックを処理する技術だけでなく、<strong>「相手にどの厄介なブロックを送るか」</strong>という駆け引きが勝利の鍵を握ります！
+                    </p>
+
+                    <h3 style="color: white; margin-bottom: 10px;">🎮 遊び方</h3>
+                    <ol
+                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                        <li><strong>ブロック選択:</strong> 制限時間内に、提示された4つの選択肢の中から「自分用のブロック」と「相手用のブロック」をキーボードの1〜4で選びます。</li>
+                        <li><strong>パズルフェーズ:</strong> 選んだブロックが順番に落ちてきます。横一列に揃えてブロックを消し、スコアを稼ぎましょう。</li>
+                        <li>どちらかのブロックが一番上まで積み上がり、ゲームオーバーになるまで繰り返します。</li>
+                    </ol>
+
+                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_score_system_title">💎 スコアシステム</h3>
+                    <ul
+                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                        <li data-i18n="help_score_lines"><strong>ライン消し:</strong> 1列:100 / 2列:300 / 3列:500 / 4列:800</li>
+                        <li data-i18n="help_score_bonus"><strong>落下ボーナス:</strong>
+                            手動で落とした距離に応じて、1ブロック最大<strong>25点</strong>まで加算されます。早く正確に落とすことが高得点への近道です！</li>
+                    </ul>
+
+                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_controls_title">⌨️ 操作方法</h3>
+                    <ul
+                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px; list-style-type: none;">
+                        <li data-i18n="help_controls_move"><strong>ASD:</strong> 移動 / 下に落とす</li>
+                        <li data-i18n="help_controls_rot"><strong>Q / E:</strong> 左回転 / 右回転</li>
+                        <li data-i18n="help_controls_harddrop"><strong>Space:</strong> ハードドロップ</li>
+                        <li data-i18n="help_controls_select"><strong>1〜4キー:</strong> ブロックの選択</li>
+                    </ul>
+
+                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_attack_title">⚔️ 攻撃と相殺（お邪魔ブロック）</h3>
+                    <ul
+                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                        <li data-i18n="help_attack_desc1">
+                            <strong>設定した段数(n)</strong>以上を同時に消すと、<strong>指定した段数(m)</strong>のお邪魔ブロックを相手に送ることができます。（nとmはロビーで設定可能）
+                        </li>
+                        <li data-i18n="help_attack_desc2">設定された段数よりも多く同時に消した場合は、1ラインごとにさらに1段追加でお邪魔ブロックを送れます。</li>
+                        <li data-i18n="help_attack_pending"><strong>保留システム（Pending）:</strong>
+                            相手から攻撃を受けると「接近中（保留）」状態になり、<strong>自分のブロックが着地した瞬間</strong>に下からせり上がってきます。</li>
+                        <li data-i18n="help_attack_cancel"><strong>相殺:</strong>
+                            保留中のお邪魔ブロックがある状態でラインを消して攻撃すると、相手に送る前に<strong>自分の保留ブロックを相殺（キャンセル）</strong>できます。さらに余裕があれば、すでに自分の盤面にあるお邪魔ブロックも直接消すことができます。
+                        </li>
+                        <li data-i18n="help_attack_sudden_death"><strong>サドンデス（時間加速）:</strong>
+                            試合が永遠に続くのを防ぐため、最初は<strong>9ターンごとに相殺不可能な下からのせり上がりが1段発生</strong>します。この間隔は<strong>30秒経過するごとに1ターンずつ短くなり、最終的には毎ターンせり上がってくる</strong>過酷なバトルになります。
+                        </li>
+                    </ul>
+
+                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_other_features_title">🌐 その他の機能</h3>
+                    <ul
+                        style="margin-bottom: 30px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                        <li data-i18n="help_spectator"><strong>観戦モード:</strong> 友達の対戦や、CPU同士の神業対戦(Watch Mode)を観戦できます。
+                        </li>
+                        <li data-i18n="help_hotspot"><strong>ホットスポット(オフライン):</strong>
+                            アプリをPWAとしてインストールすれば、テザリング機能を使って外でもデータ通信なしで遊べます。</li>
+                    </ul>
+
+                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_creator_title">👤 開発・ライセンス</h3>
+                    <div
+                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);">
+                        <p data-i18n="help_creator_name">開発者: O-ya tech</p>
+                        <p><span data-i18n="help_creator_hp_label" style="display:none;">公式HP: </span><a
+                                href="https://g0083.github.io/" target="_blank"
+                                style="color: var(--accent-secondary); text-decoration: none;"
+                                data-i18n="help_creator_hp">公式HP: https://g0083.github.io/</a></p>
+                    </div>
+
+                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_license_title">📜 サードパーティ・ライセンス</h3>
+                    <p style="margin-bottom: 30px; font-size: 0.8rem; line-height: 1.6; color: rgba(255,255,255,0.6);"
+                        data-i18n="help_license_libraries">
+                        PeerJS (MIT), QRious (GPL-3.0), ONNX Runtime (MIT), nanoid (MIT), Outfit Font (OFL)
+                    </p>
+
+                    <button id="close-help-btn" class="btn-primary" style="width: 100%;"
+                        data-i18n="close">Close</button>
+                </div>
+            </div>
+        </main>
+
+        <div id="alert-overlay" class="overlay hidden glass-heavy" style="z-index: 2000;">
+            <div class="lobby-content" style="max-width: 400px; padding: 30px;">
+                <h3 id="alert-title" style="color: var(--accent-primary); margin-bottom: 15px;"
+                    data-i18n="alert_notification">Notification</h3>
+                <p id="alert-message" style="margin-bottom: 25px; line-height: 1.6;"></p>
+                <button id="alert-ok-btn" class="btn-primary" style="width: 100%;" data-i18n="close">OK</button>
+            </div>
+        </div>
+
+        <div id="confirm-overlay" class="overlay hidden glass-heavy" style="z-index: 2005;">
+            <div class="lobby-content" style="max-width: 400px; padding: 30px;">
+                <h3 id="confirm-title" style="color: var(--accent-primary); margin-bottom: 15px;"
+                    data-i18n="alert_confirmation">Confirmation</h3>
+                <p id="confirm-message" style="margin-bottom: 25px; line-height: 1.6;"></p>
+                <div style="display: flex; gap: 10px;">
+                    <button id="confirm-cancel-btn" class="btn-secondary" style="flex: 1;"
+                        data-i18n="back_btn">Cancel</button>
+                    <button id="confirm-ok-btn" class="btn-primary" style="flex: 1;"
+                        data-i18n="connect_btn">Switch</button>
+                </div>
+            </div>
+        </div>
+        <div id="settings-overlay" class="overlay hidden glass-heavy" style="z-index: 2500;">
+            <div class="lobby-content" style="max-width: 400px; padding: 30px;">
+                <h3 style="color: var(--accent-primary); margin-bottom: 25px; text-align: center;"
+                    data-i18n="settings_title">Settings</h3>
+
+                <div class="input-group" style="margin-bottom: 25px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin-bottom: 0;" data-i18n="bgm">BGM</label>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button id="settings-bgm-mute-btn"
+                            style="background: none; border: none; font-size: 1.2rem; width: 25px; text-align: center; cursor: pointer; padding: 0;">🔊</button>
+                        <input type="range" id="settings-bgm-vol" min="0" max="1" step="0.01" style="flex: 1;">
+                        <span
+                            style="font-size: 1.2rem; width: 25px; text-align: center; color: var(--text-secondary); opacity: 0.6;">+</span>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-bottom: 25px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin-bottom: 0;" data-i18n="se">Sound Effects</label>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <button id="settings-se-mute-btn"
+                            style="background: none; border: none; font-size: 1.2rem; width: 25px; text-align: center; cursor: pointer; padding: 0;">🔊</button>
+                        <input type="range" id="settings-se-vol" min="0" max="1" step="0.01" style="flex: 1;">
+                        <span
+                            style="font-size: 1.2rem; width: 25px; text-align: center; color: var(--text-secondary); opacity: 0.6;">+</span>
+                    </div>
+                </div>
+
+                <div class="input-group" style="margin-bottom: 30px;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <label style="margin-bottom: 0;" data-i18n="language">Language</label>
+                    </div>
+                    <select id="settings-lang" class="glass"
+                        style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.2);">
+                        <option value="ja">日本語 (Japanese)</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+
+                <button id="close-settings-btn" class="btn-primary" style="width: 100%;"
+                    data-i18n="close">Close</button>
+            </div>
+        </div>
+        <div id="toast" class="toast hidden">Message copied!</div>
+    </div>
+
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</body>
+
+</html>
