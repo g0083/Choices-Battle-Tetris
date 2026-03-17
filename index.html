@@ -14,8 +14,8 @@
     <link rel="icon" type="image/png" href="/icon-192.png">
     <meta name="google" content="notranslate">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-  <script type="module" crossorigin src="/assets/index-CxVNmHIt.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-D5bfLNDy.css">
+  <script type="module" crossorigin src="/assets/index-DMQImk7F.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BiGlOLOi.css">
 </head>
 
 <body>
@@ -487,65 +487,80 @@
             <div id="help-overlay" class="overlay hidden glass-heavy" style="z-index: 2500;">
                 <div class="lobby-content"
                     style="max-width: 600px; padding: 30px; text-align: left; max-height: 80vh; overflow-y: auto;">
-                    <h2 style="text-align: center; margin-bottom: 20px; color: var(--accent-secondary);">How to Play
-                    </h2>
+                <div class="help-scroll-container">
+                    <h2 style="text-align: center; margin-bottom: 20px; color: var(--accent-secondary);" data-i18n="help_title">How to Play</h2>
 
-                    <h3 style="color: white; margin-bottom: 10px;">🌟 ゲームの特徴</h3>
-                    <p style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);">
-                        「Choices Battle Blocks」は、自分と相手のブロックを互いに選び合う、新感覚の対戦型パズルゲームです。<br>
-                        落ちてくるブロックを処理する技術だけでなく、<strong>「相手にどの厄介なブロックを送るか」</strong>という駆け引きが勝利の鍵を握ります！
-                    </p>
+                    <div id="help-stage-1" class="help-stage">
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_overview_title">🌟 ゲームの特徴</h3>
+                        <p style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);"
+                            data-i18n="help_overview_desc">
+                            「Choices Battle Blocks」は、自分と相手のブロックを互いに選び合う、新感覚の対戦型パズルゲームです。
+                            落ちてくるブロックを処理する技術だけでなく、「相手にどの厄介なブロックを送るか」という駆け引きが勝利の鍵を握ります！
+                        </p>
 
-                    <h3 style="color: white; margin-bottom: 10px;">🎮 遊び方</h3>
-                    <ol
-                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
-                        <li><strong>ブロック選択:</strong> 制限時間内に、提示された4つの選択肢の中から「自分用のブロック」と「相手用のブロック」をキーボードの1〜4で選びます。</li>
-                        <li><strong>パズルフェーズ:</strong> 選んだブロックが順番に落ちてきます。横一列に揃えてブロックを消し、スコアを稼ぎましょう。</li>
-                        <li>どちらかのブロックが一番上まで積み上がり、ゲームオーバーになるまで繰り返します。</li>
-                    </ol>
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_how_to_play_title">🎮 遊び方</h3>
+                        <ul
+                            style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                            <li data-i18n="help_step_1">ブロック選択: 制限時間内に、提示された4つの選択肢の中から「自分用のブロック」と「相手用のブロック」をキーボードの1〜4で選びます。</li>
+                            <li data-i18n="help_step_2">パズルフェーズ: 選んだブロックが順番に落ちてきます。横一列に揃えてブロックを消し、スコアを稼ぎましょう。</li>
+                            <li data-i18n="help_step_3">どちらかのブロックが一番上まで積み上がり、ゲームオーバーになるまで繰り返します。</li>
+                        </ul>
 
-                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_score_system_title">💎 スコアシステム</h3>
-                    <ul
-                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
-                        <li data-i18n="help_score_lines"><strong>ライン消し:</strong> 1列:100 / 2列:300 / 3列:500 / 4列:800</li>
-                        <li data-i18n="help_score_bonus"><strong>落下ボーナス:</strong>
-                            手動で落とした距離に応じて、1ブロック最大<strong>25点</strong>まで加算されます。早く正確に落とすことが高得点への近道です！</li>
-                    </ul>
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_controls_title">⌨️ 操作方法</h3>
+                        <div
+                            style="margin-bottom: 30px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px;">
+                            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                <span data-i18n="help_control_move">A / D: 左右移動</span>
+                                <span data-i18n="help_control_drop">S: 下に一段落とす</span>
+                                <span data-i18n="help_control_rotate">Q / E: 左回転 / 右回転</span>
+                                <span data-i18n="help_control_hard_drop">Space: ハードドロップ</span>
+                                <span data-i18n="help_control_select">1〜4キー: ブロックの選択</span>
+                            </div>
+                        </div>
+                    </div>
 
-                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_controls_title">⌨️ 操作方法</h3>
-                    <ul
-                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px; list-style-type: none;">
-                        <li data-i18n="help_controls_move"><strong>ASD:</strong> 移動 / 下に落とす</li>
-                        <li data-i18n="help_controls_rot"><strong>Q / E:</strong> 左回転 / 右回転</li>
-                        <li data-i18n="help_controls_harddrop"><strong>Space:</strong> ハードドロップ</li>
-                        <li data-i18n="help_controls_select"><strong>1〜4キー:</strong> ブロックの選択</li>
-                    </ul>
+                    <div id="help-stage-2" class="help-stage">
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_score_title">💎 スコアシステム</h3>
+                        <ul
+                            style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                            <li data-i18n="help_score_lines">1列:100 / 2列:300 / 3列:500 / 4列:800</li>
+                            <li data-i18n="help_score_drop">手動で落とした距離に応じて、1ブロック最大25点まで加算されます。早く正確に落とすことが高得点への近道です！</li>
+                        </ul>
 
-                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_attack_title">⚔️ 攻撃と相殺（お邪魔ブロック）</h3>
-                    <ul
-                        style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
-                        <li data-i18n="help_attack_desc1">
-                            <strong>設定した段数(n)</strong>以上を同時に消すと、<strong>指定した段数(m)</strong>のお邪魔ブロックを相手に送ることができます。（nとmはロビーで設定可能）
-                        </li>
-                        <li data-i18n="help_attack_desc2">設定された段数よりも多く同時に消した場合は、1ラインごとにさらに1段追加でお邪魔ブロックを送れます。</li>
-                        <li data-i18n="help_attack_pending"><strong>保留システム（Pending）:</strong>
-                            相手から攻撃を受けると「接近中（保留）」状態になり、<strong>自分のブロックが着地した瞬間</strong>に下からせり上がってきます。</li>
-                        <li data-i18n="help_attack_cancel"><strong>相殺:</strong>
-                            保留中のお邪魔ブロックがある状態でラインを消して攻撃すると、相手に送る前に<strong>自分の保留ブロックを相殺（キャンセル）</strong>できます。さらに余裕があれば、すでに自分の盤面にあるお邪魔ブロックも直接消すことができます。
-                        </li>
-                        <li data-i18n="help_attack_sudden_death"><strong>サドンデス（時間加速）:</strong>
-                            試合が永遠に続くのを防ぐため、最初は<strong>9ターンごとに相殺不可能な下からのせり上がりが1段発生</strong>します。この間隔は<strong>30秒経過するごとに1ターンずつ短くなり、最終的には毎ターンせり上がってくる</strong>過酷なバトルになります。
-                        </li>
-                    </ul>
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_battle_system_title">⚔️ 攻撃と相殺</h3>
+                        <p style="margin-bottom: 15px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);" data-i18n="help_battle_desc_1">
+                            設定した段数(n)以上を同時に消すと、指定した段数(m)のお邪魔ブロックを相手に送ることができます。
+                            設定された段数よりも多く同時に消した場合は、1ラインごとにさらに1段追加でお邪魔ブロックを送れます。
+                        </p>
+                        <p style="margin-bottom: 15px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);" data-i18n="help_battle_desc_2">
+                            相手から攻撃を受けると「保留」状態になり、自分のブロックが着地した瞬間に下からせり上がってきます。
+                            保留中のお邪魔ブロックがある状態でラインを消して攻撃すると、相手に送る前に自分の保留ブロックを相殺（キャンセル）できます。さらに余裕があれば、すでに自分の盤面にあるお邪魔ブロックも直接消すことができます。
+                        </p>
+                        
+                        <h3 style="color: #ffaa00; margin-bottom: 10px;" data-i18n="help_sudden_death_title">🔥 サドンデス（時間加速）</h3>
+                        <p style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);" data-i18n="help_sudden_death_desc">
+                            試合が永遠に続くのを防ぐため、最初は9ターンごとに相殺不可能な下からのせり上がりが1段発生します。この間隔は30秒経過するごとに1ターンずつ短くなり、最終的には毎ターンせり上がってくる過酷なバトルになります。
+                        </p>
+                    </div>
 
-                    <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_other_features_title">🌐 その他の機能</h3>
-                    <ul
-                        style="margin-bottom: 30px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
-                        <li data-i18n="help_spectator"><strong>観戦モード:</strong> 友達の対戦や、CPU同士の神業対戦(Watch Mode)を観戦できます。
-                        </li>
-                        <li data-i18n="help_hotspot"><strong>ホットスポット(オフライン):</strong>
-                            アプリをPWAとしてインストールすれば、テザリング機能を使って外でもデータ通信なしで遊べます。</li>
-                    </ul>
+                    <div id="help-stage-3" class="help-stage">
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_rating_title">📈 レーティングシステム</h3>
+                        <p style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);" data-i18n="help_rating_desc">
+                            ランダムマッチやCPU対戦の結果に応じてレートが変動します。レートが1000を超えている場合、168時間（1週間）以上プレイしないと24時間ごとに10ずつレートが自動減少します。これはアクティブなプレイヤーの正確な実力を反映するための仕組みです。
+                        </p>
+
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_penalty_title">⚠️ 離脱ペナルティ</h3>
+                        <p style="margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8);" data-i18n="help_penalty_desc">
+                            ランダムマッチやCPU対戦の途中で故意にブラウザを閉じたり、通信を切断したりすると、ペナルティとしてレートが減少します。公平な試合環境を維持するため、最後までプレイをお願いします。
+                        </p>
+
+                        <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_other_features_title">🌐 その他の機能</h3>
+                        <ul
+                            style="margin-bottom: 30px; font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.8); padding-left: 20px;">
+                            <li data-i18n="help_spectator">友達の対戦や、CPU同士の神業対戦(Watch Mode)を観戦できます。</li>
+                            <li data-i18n="help_hotspot">アプリをPWAとしてインストールすれば、テザリング機能を使って外でもデータ通信なしで遊べます。</li>
+                        </ul>
+                    </div>
 
                     <h3 style="color: white; margin-bottom: 10px;" data-i18n="help_creator_title">👤 開発・ライセンス</h3>
                     <div
@@ -670,11 +685,16 @@
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                         <label style="margin-bottom: 0;" data-i18n="language">Language</label>
                     </div>
-                    <select id="settings-lang" class="glass"
-                        style="width: 100%; padding: 10px; border-radius: 8px; background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.2);">
-                        <option value="ja">日本語 (Japanese)</option>
-                        <option value="en">English</option>
-                    </select>
+                    <div class="custom-dropdown" id="settings-lang-dropdown">
+                        <div class="dropdown-trigger glass" id="settings-lang-trigger">
+                            <span id="settings-lang-label">日本語 (Japanese)</span>
+                            <span class="dropdown-arrow">▼</span>
+                        </div>
+                        <div class="dropdown-options glass hidden" id="settings-lang-options">
+                            <div class="dropdown-option" data-value="ja">日本語 (Japanese)</div>
+                            <div class="dropdown-option" data-value="en">English</div>
+                        </div>
+                    </div>
                 </div>
 
                 <button id="close-settings-btn" class="btn-primary" style="width: 100%;"
