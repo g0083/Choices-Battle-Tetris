@@ -14,8 +14,8 @@
     <link rel="icon" type="image/png" href="/icon-192.png">
     <meta name="google" content="notranslate">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
-    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
-  <script type="module" crossorigin src="/assets/index-BYZFzALA.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+  <script type="module" crossorigin src="/assets/index-CS5456ol.js"></script>
   <link rel="stylesheet" crossorigin href="/assets/index-CG2f7TvH.css">
 </head>
 
@@ -73,6 +73,16 @@
                             </button>
                             <button id="settings-btn-menu" class="menu-item">
                                 <span>⚙️</span> <span data-i18n="settings">Settings</span>
+                            </button>
+
+                            <button class="menu-item hidden" id="btn-update-pwa-menu">
+                                <span>🔄</span>
+                                <span data-i18n="update_app">Update App</span>
+                            </button>
+
+                            <button class="menu-item" id="bug-report-btn">
+                                <span>🐛</span>
+                                <span data-i18n="bug_report">バグ報告・要望</span>
                             </button>
 
                             <button id="help-btn" class="menu-item">
@@ -781,7 +791,7 @@
         <div id="qr-scanner-overlay" class="overlay hidden glass-heavy" style="z-index: 5000;">
             <div class="lobby-content" style="max-width: 400px; padding: 20px; text-align: center;">
                 <h3 style="color: var(--accent-primary); margin-bottom: 15px;">Scan QR Code</h3>
-                <div id="qr-reader" style="width: 100%; min-height: 250px; background: #000; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 15px;"></div>
+                <video id="qr-video" autoplay playsinline style="width: 100%; min-height: 250px; background: #000; border-radius: var(--radius-sm); overflow: hidden; margin-bottom: 15px; object-fit: cover;"></video>
                 <button id="close-scanner-btn" class="btn-secondary" style="width: 100%;" data-i18n="close">Close</button>
             </div>
         </div>
