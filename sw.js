@@ -1,4 +1,4 @@
-const CACHE_NAME = 'choices-blocks-1.0.0'; //publish ver1.0.0,main.jsの冒頭も変更する
+const CACHE_NAME = 'choices-blocks-1.0.1'; //publish ver1.0.1,main.jsの冒頭も変更する
 
 self.addEventListener('fetch', event => {
   // GETリクエスト以外（WebRTCの通信など）はキャッシュ処理をスキップ
